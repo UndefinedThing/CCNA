@@ -3,8 +3,9 @@
 ***20/12/2018***  - Bordeaux Ynov Campus Informatique B1 B
 ## Auteurs
 * **BOUFFARTIGUE** Pierre 
-* **LE COZ** Yann 
 * **BRUNO** Lúca
+* **LE COZ** Yann 
+* **PETIT** Martin
 # I. Exploration locale en solo
 ## 1. Affichage d'informations sur la pile TCP/IP locale
 **En ligne de commande**
