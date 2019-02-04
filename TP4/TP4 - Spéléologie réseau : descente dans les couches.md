@@ -7,6 +7,11 @@
   * [Création des réseaux](#i1-création-des-réseaux)
   * [Création des VMs](#i2-création-des-vms)
   * [Mise en place du routage statique](#i3-mise-en-place-du-routage-statique)
+* [Spéléologie réseau](#ii-spéléologie-réseau)
+  * [Manipulation 1](#ii11-manipulation-1)
+  * [Manipulation 2](#ii12-manipulation-2)
+  * [Manipulation 3](#ii13-manipulation-3)
+  * [Manipulation 4](#ii14-manipulation-4)
 ## Préparation d'une VM "patron"
 On a dû dans un premier temps créer et installer une VM patron avec les configurations suivantes :
 * 512 Mo RAM
@@ -15,7 +20,7 @@ On a dû dans un premier temps créer et installer une VM patron avec les config
 * un disque de 8Go
 * l'`.iso` de CentOS 7 (sur le "contrôleur IDE")
 
-**Ajouter une capture d'écran ici**
+![](https://github.com/Zocel/CCNA/blob/master/TP4/images/1.png)
 
 Dans un deuxième temps, nous avons dû la configurer à partir des lignes de commandes ci-dessous :
 ```bash
@@ -50,18 +55,26 @@ Nous avons ensuite créé deux nouveaux réseaux host-only dont les spécificit�
   * la carte réseau de l'hôte doit porter l'IP `10.2.0.1`
   * ce réseau n'a **PAS** de serveur DHCP
 
-**Ajouter la capture d'écran de la fenêtre host-only**
-**Ajouter la capture d'écran du terminal**
+![](https://github.com/Zocel/CCNA/blob/master/TP4/images/2.png)
+![](https://github.com/Zocel/CCNA/blob/master/TP4/images/3.png)
 
 ### I.2 Création des VMs
 Dans cette partie, nous avons cloner trois fois la *VM "patron"* pour obtenir trois VMs distinctes :
 * **La VM Cliente** nommée *client1.tp4*
   * qui contient une carte réseau dans `vboxnet1` qui porte l'IP `10.1.0.10`
+
+  ![](https://github.com/Zocel/CCNA/blob/master/TP4/images/6.png)
+
 * **La VM Serveur** nommée *server1.tp4*
   * qui contient une carte réseau dans `vboxnet2` qui porte l'IP `10.2.0.10`
+
+  ![](https://github.com/Zocel/CCNA/blob/master/TP4/images/7.png)
+
 * **La VM Routeur** nommée *router1.tp4*
   * qui contient une carte réseau dans `vboxnet1` qui porte l'IP `10.1.0.254`
   * qui contient une carte réseau dans `vboxnet2` qui porte l'IP `10.2.0.254`
+
+  ![](https://github.com/Zocel/CCNA/blob/master/TP4/images/8.png)
 
 De plus après avoir défini les adresses IPs statiques de chacunes d'elles, nous leur avons défini des noms de domaines, rempli leur fichier `/etc/hosts` et pour terminer nous les avons "pingé" entre elles :
 * **ping de *client1* vers *router1.tp4* sur l'IP `10.1.0.254`:**
@@ -146,14 +159,14 @@ Pour terminer, nous vérifions que la connexion entre le Client et le Serveur es
 On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**.
 
 #### II.1.1 Manipulation 1
-**1. *client1.tp4*:**
+**1. *client1.tp4* :**
   * **Affichage de la table ARP**
     ```bash
     [yann@client1 ~]$ sudo ip neigh flush all
     [yann@client1 ~]$ ip neigh show
     10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 REACHABLE
     ```
-  * **Ping vers *server1**
+  * **Ping vers *server1***
     ```bash
     [yann@client1 ~]$ ping server1
     PING server1 (10.2.0.10) 56(84) bytes of data.
@@ -179,14 +192,14 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
     10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 DELAY
     ```
 
-**2. *server1.tp4*:**
+**2. *server1.tp4* :**
   * **Affichage de la table ARP**
     ```bash
     [yann@server1 ~]$ sudo ip neigh flush all
     [yann@server1 ~]$ ip neigh show
     10.2.0.1 dev enp0s3 lladdr 0a:00:27:00:00:02 REACHABLE
     ```
-  * **Ping vers *client1**
+  * **Ping vers *client1***
     ```bash
     [yann@server1 ~]$ ping client1
     PING client1 (10.1.0.10) 56(84) bytes of data.
@@ -205,7 +218,7 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
     10 packets transmitted, 10 received, 0% packet loss, time 9058ms
     rtt min/avg/max/mdev = 0.794/1.271/2.695/0.516 ms
     ```
-    * **Nouvel affichage de la table ARP**
+  * **Nouvel affichage de la table ARP**
     ```bash
     [yann@server1 ~]$ ip neigh show
     10.2.0.254 dev enp0s3 lladdr 08:00:27:5a:f9:dd STALE
@@ -213,14 +226,14 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
     ```
 
 #### II.1.2 Manipulation 2
-**1. *router1.tp4*:**
-  **Affichage de la table ARP**
+**1. *router1.tp4* :**
+* **Affichage de la table ARP**
     ```bash
     [yann@router1 ~]$ sudo ip neigh flush all
     [yann@router1 ~]$ ip neigh show
     10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 REACHABLE
     ```
-**2. *client1.tp4*:**
+**2. *client1.tp4* :**
   ```bash
   [yann@client1 ~]$ ping server1
   PING server1 (10.2.0.10) 56(84) bytes of data.
@@ -234,7 +247,7 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
   5 packets transmitted, 5 received, 0% packet loss, time 4011ms
   rtt min/avg/max/mdev = 0.864/1.240/1.487/0.292 ms
   ```
-**3. *router1.tp4*:**
+**3. *router1.tp4* :**
   ```bash
   [yann@router1 ~]$ ip neigh show
   10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 DELAY
