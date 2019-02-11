@@ -1,6 +1,4 @@
 # TP 4 - Spéléologie réseau : descente dans les couches
-## Auteur
-**Yann LE COZ** - Bordeaux Ynov Campus Informatique - [Zocel](https://github.com/Zocel)
 ## Sommaire
 * [Préparation d'une VM "patron"](#preparation-dune-vm-patron)
 * [Mise en place du Lab](#i-mise-en-place-du-lab)
@@ -19,8 +17,6 @@ On a dû dans un premier temps créer et installer une VM patron avec les config
 * une carte NAT
 * un disque de 8Go
 * l'`.iso` de CentOS 7 (sur le "contrôleur IDE")
-
-![](https://github.com/Zocel/CCNA/blob/master/TP4/images/1.png)
 
 Dans un deuxième temps, nous avons dû la configurer à partir des lignes de commandes ci-dessous :
 ```bash
@@ -55,31 +51,22 @@ Nous avons ensuite créé deux nouveaux réseaux host-only dont les spécificit�
   * la carte réseau de l'hôte doit porter l'IP `10.2.0.1`
   * ce réseau n'a **PAS** de serveur DHCP
 
-![](https://github.com/Zocel/CCNA/blob/master/TP4/images/2.png)
-![](https://github.com/Zocel/CCNA/blob/master/TP4/images/3.png)
-
 ### I.2 Création des VMs
 Dans cette partie, nous avons cloner trois fois la *VM "patron"* pour obtenir trois VMs distinctes :
 * **La VM Cliente** nommée *client1.tp4*
   * qui contient une carte réseau dans `vboxnet1` qui porte l'IP `10.1.0.10`
 
-  ![](https://github.com/Zocel/CCNA/blob/master/TP4/images/6.png)
-
 * **La VM Serveur** nommée *server1.tp4*
   * qui contient une carte réseau dans `vboxnet2` qui porte l'IP `10.2.0.10`
-
-  ![](https://github.com/Zocel/CCNA/blob/master/TP4/images/7.png)
-
+  
 * **La VM Routeur** nommée *router1.tp4*
   * qui contient une carte réseau dans `vboxnet1` qui porte l'IP `10.1.0.254`
   * qui contient une carte réseau dans `vboxnet2` qui porte l'IP `10.2.0.254`
 
-  ![](https://github.com/Zocel/CCNA/blob/master/TP4/images/8.png)
-
 De plus après avoir défini les adresses IPs statiques de chacunes d'elles, nous leur avons défini des noms de domaines, rempli leur fichier `/etc/hosts` et pour terminer nous les avons "pingé" entre elles :
 * **ping de *client1* vers *router1.tp4* sur l'IP `10.1.0.254`:**
   ```bash
-  [yann@client1 ~]$ ping 10.1.0.254
+  
   PING 10.1.0.254 (10.1.0.254) 56(84) bytes of data.
   64 bytes from 10.1.0.254: icmp_seq=1 ttl=64 time=1.29 ms
   64 bytes from 10.1.0.254: icmp_seq=2 ttl=64 time=0.756 ms
@@ -98,7 +85,6 @@ De plus après avoir défini les adresses IPs statiques de chacunes d'elles, nou
   ```
 * **ping de *server1* vers *router1.tp4* sur l'IP `10.2.0.254`:**
   ```bash
-  [yann@server1 ~]$ ping 10.2.0.254
   PING 10.2.0.254 (10.2.0.254) 56(84) bytes of data.
   64 bytes from 10.2.0.254: icmp_seq=1 ttl=64 time=1.31 ms
   64 bytes from 10.2.0.254: icmp_seq=2 ttl=64 time=0.730 ms
@@ -162,13 +148,13 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
 **1. *client1.tp4* :**
   * **Affichage de la table ARP**
     ```bash
-    [yann@client1 ~]$ sudo ip neigh flush all
-    [yann@client1 ~]$ ip neigh show
+          sudo ip neigh flush all
+          ip neigh show
     10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 REACHABLE
     ```
   * **Ping vers *server1***
     ```bash
-    [yann@client1 ~]$ ping server1
+           ping server1
     PING server1 (10.2.0.10) 56(84) bytes of data.
     64 bytes from server1 (10.2.0.10): icmp_seq=1 ttl=63 time=0.811 ms
     64 bytes from server1 (10.2.0.10): icmp_seq=2 ttl=63 time=0.712 ms
@@ -187,7 +173,7 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
     ```
   * **Nouvel affichage de la table ARP**
     ```bash
-    [yann@client1 ~]$ ip neigh show
+            ip neigh show
     10.1.0.254 dev enp0s3 lladdr 08:00:27:a9:71:02 STALE
     10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 DELAY
     ```
@@ -195,13 +181,13 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
 **2. *server1.tp4* :**
   * **Affichage de la table ARP**
     ```bash
-    [yann@server1 ~]$ sudo ip neigh flush all
-    [yann@server1 ~]$ ip neigh show
+                  sudo ip neigh flush all
+                  ip neigh show
     10.2.0.1 dev enp0s3 lladdr 0a:00:27:00:00:02 REACHABLE
     ```
   * **Ping vers *client1***
     ```bash
-    [yann@server1 ~]$ ping client1
+                    ping client1
     PING client1 (10.1.0.10) 56(84) bytes of data.
     64 bytes from client1 (10.1.0.10): icmp_seq=1 ttl=63 time=1.52 ms
     64 bytes from client1 (10.1.0.10): icmp_seq=2 ttl=63 time=1.09 ms
@@ -220,7 +206,7 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
     ```
   * **Nouvel affichage de la table ARP**
     ```bash
-    [yann@server1 ~]$ ip neigh show
+                 ip neigh show
     10.2.0.254 dev enp0s3 lladdr 08:00:27:5a:f9:dd STALE
     10.2.0.1 dev enp0s3 lladdr 0a:00:27:00:00:02 DELAY
     ```
@@ -229,13 +215,13 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
 **1. *router1.tp4* :**
 * **Affichage de la table ARP**
     ```bash
-    [yann@router1 ~]$ sudo ip neigh flush all
-    [yann@router1 ~]$ ip neigh show
+                    sudo ip neigh flush all
+                    ip neigh show
     10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 REACHABLE
     ```
 **2. *client1.tp4* :**
   ```bash
-  [yann@client1 ~]$ ping server1
+                 ping server1
   PING server1 (10.2.0.10) 56(84) bytes of data.
   64 bytes from server1 (10.2.0.10): icmp_seq=1 ttl=63 time=0.899 ms
   64 bytes from server1 (10.2.0.10): icmp_seq=2 ttl=63 time=1.48 ms
@@ -249,14 +235,14 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
   ```
 **3. *router1.tp4* :**
   ```bash
-  [yann@router1 ~]$ ip neigh show
+               ip neigh show
   10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 DELAY
   10.1.0.10 dev enp0s3 lladdr 08:00:27:40:22:b5 STALE
   10.2.0.10 dev enp0s8 lladdr 08:00:27:2a:2e:60 STALE
   ```
 #### II.1.3 Manipulation 3
 ```bash
-ylcoz@ZOCEL:~$ ip neigh show
+              ip neigh show
 10.1.0.254 dev vboxnet1 lladdr 08:00:27:a9:71:02 STALE
 10.33.1.253 dev wlp3s0 lladdr 5c:c5:d4:8c:83:c7 STALE
 10.33.3.219 dev wlp3s0 lladdr 04:d3:b0:0e:73:a1 STALE
@@ -269,25 +255,9 @@ ylcoz@ZOCEL:~$ ip neigh show
 10.2.0.10 dev vboxnet2 lladdr 08:00:27:2a:2e:60 STALE
 10.33.2.136 dev wlp3s0 lladdr 38:f9:d3:25:7c:f5 STALE
 10.33.1.222 dev wlp3s0 lladdr c0:b6:f9:77:77:a2 STALE
-ylcoz@ZOCEL:~$ sudo ip neigh flush all
-ylcoz@ZOCEL:~$ ip neigh show
+       sudo ip neigh flush all
+       ip neigh show
 10.33.3.253 dev wlp3s0 lladdr 00:12:00:40:4c:bf REACHABLE
-ylcoz@ZOCEL:~$ ip neigh show
+       ip neigh show
 10.33.3.253 dev wlp3s0 lladdr 00:12:00:40:4c:bf REACHABLE
-```
-#### II.1.4 Manipulation 4
-```bash
-[yann@client1 ~]$ sudo ip neigh flush all
-[sudo] Mot de passe de yann : 
-[yann@client1 ~]$ curl google.fr
-<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
-<TITLE>301 Moved</TITLE></HEAD><BODY>
-<H1>301 Moved</H1>
-The document has moved
-<A HREF="http://www.google.fr/">here</A>.
-</BODY></HTML>
-[yann@client1 ~]$ ip neigh show
-10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 REACHABLE
-10.0.3.3 dev enp0s8 lladdr 52:54:00:12:35:03 REACHABLE
-10.0.3.2 dev enp0s8 lladdr 52:54:00:12:35:02 REACHABLE
 ```
