@@ -242,7 +242,7 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
   ```
 #### II.1.3 Manipulation 3
 ```bash
-              ip neigh show
+         ip neigh show
 10.1.0.254 dev vboxnet1 lladdr 08:00:27:a9:71:02 STALE
 10.33.1.253 dev wlp3s0 lladdr 5c:c5:d4:8c:83:c7 STALE
 10.33.3.219 dev wlp3s0 lladdr 04:d3:b0:0e:73:a1 STALE
@@ -255,9 +255,9 @@ On se connecte au *client1.tp4*, au *server1.tp4* et au *router1.tp4* en **SSH**
 10.2.0.10 dev vboxnet2 lladdr 08:00:27:2a:2e:60 STALE
 10.33.2.136 dev wlp3s0 lladdr 38:f9:d3:25:7c:f5 STALE
 10.33.1.222 dev wlp3s0 lladdr c0:b6:f9:77:77:a2 STALE
-       sudo ip neigh flush all
-       ip neigh show
+        sudo ip neigh flush all
+        ip neigh show
 10.33.3.253 dev wlp3s0 lladdr 00:12:00:40:4c:bf REACHABLE
-       ip neigh show
+        ip neigh show
 10.33.3.253 dev wlp3s0 lladdr 00:12:00:40:4c:bf REACHABLE
 ```
