@@ -6,12 +6,12 @@ Le fichier "members" contient les noms des personnes ayant participées au TP à
 
 ## TP2 - Exploration du réseau d'un point de vue client
 
-[Compte-rendu du TP2]()
+[Compte-rendu du TP2](https://github.com/UndefinedThing/CCNA/tree/master/TP2)
 
 ## TP3 - Plusieurs réseaux : routage statique
 
-[Compte-rendu du TP3]()
+[Compte-rendu du TP3](https://github.com/UndefinedThing/CCNA/tree/master/TP3)
 
 ## TP4 - Spéléologie réseau : descente dans les couches
 
-[Compte-rendu du TP4]()
+[Compte-rendu du TP4](https://github.com/UndefinedThing/CCNA/tree/master/TP4)
